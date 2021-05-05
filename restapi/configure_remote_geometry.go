@@ -4,14 +4,11 @@ package restapi
 
 import (
 	"crypto/tls"
-	"log"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
-	"github.com/go-openapi/runtime/middleware"
 
-	"github.com/wwestgarth/remote-geometry/models"
 	"github.com/wwestgarth/remote-geometry/restapi/geometry_server"
 )
 
@@ -19,17 +16,6 @@ import (
 
 func configureFlags(api *geometry_server.RemoteGeometryAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
-}
-
-func handleHealth(params geometry_server.HealthParams) (resp middleware.Responder) {
-	log.Println("healthy")
-
-	status := "pass"
-	return &geometry_server.HealthOK{
-		Payload: &models.HealthResult{
-			Status: &status,
-		},
-	}
 }
 
 func configureAPI(api *geometry_server.RemoteGeometryAPI) http.Handler {
@@ -47,6 +33,7 @@ func configureAPI(api *geometry_server.RemoteGeometryAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.HealthHandler = geometry_server.HealthHandlerFunc(handleHealth)
+	api.CreatesphereHandler = geometry_server.CreatesphereHandlerFunc(createSphereHandler)
 
 	api.PreServerShutdown = func() {}
 

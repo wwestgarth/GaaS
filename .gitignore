@@ -20,3 +20,4 @@ models/**
 restapi/**
 
 !restapi/configure_remote_geometry.go
+!restapi/*_handler.go
