@@ -1,0 +1,49 @@
+swagger: '2.0'
+info:
+  description: >+
+    This is an geometric API that allows server-side geometric processing
+  version: '0.0.1'
+  title: Remote Geometry
+
+schemes:
+  - http
+basePath: /
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /health:
+    get:
+      summary: Check the health of the service
+      operationId: health
+      description: |-
+        Basic health check
+      responses:
+        200:
+          description: Healthy
+          schema:
+            $ref: '#/definitions/HealthResult'
+        503:
+          description: Unhealthy
+          examples:
+            application/json: { "status": "fail" }
+          schema:
+            $ref: '#/definitions/HealthResult'
+
+definitions:
+  HealthResult:
+    type: object
+    format: 'application/health+json'
+    required:
+      - status
+    properties:
+      status:
+        description: >-
+          "pass" if the service is healthy
+          "fail" if the service is unhealthy
+        type: string
+        example: 'pass'
+        enum:
+          - pass
+          - fail
