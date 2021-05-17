@@ -3,31 +3,43 @@ package geometry
 import (
 	"errors"
 
-	"github.com/go-gl/mathgl/mgl64"
+	"github.com/google/uuid"
 )
 
 var (
-	ErrNegativeRadius = errors.New("negative radius")
+	ErrInvalidRadius = errors.New("invalid radius")
 )
 
 type Sphere struct {
-	centre mgl64.Vec3
+	id     string
+	centre Vector
 	radius float64
 }
 
+// NewSphere create a new Geometry that represents a sphere
 func NewSphere(radius float64, centre [3]float64) Geometry {
 
 	return &Sphere{
+		id:     uuid.New().String(),
 		radius: radius,
-		centre: mgl64.Vec3(centre), //TODO look for vector package
+		centre: NewVector(centre[0], centre[1], centre[2]),
 	}
 }
 
+// ID return the ID of the geometry
+func (s *Sphere) ID() (id string) {
+	return s.id
+}
+
+// Validate return whether the geometry is valid
 func (s *Sphere) Validate() (err error) {
 
-	// TODO tolerances
+	if distZero(s.radius) {
+		return ErrInvalidRadius
+	}
+
 	if s.radius <= 0.0 {
-		return ErrNegativeRadius
+		return ErrInvalidRadius
 	}
 
 	// TODO sizebox check
