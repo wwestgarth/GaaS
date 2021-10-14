@@ -1,4 +1,4 @@
-package geometry
+package vector
 
 import "math"
 
@@ -13,6 +13,14 @@ type Vector struct {
 
 func NewVector(x, y, z float64) Vector {
 	return Vector{x, y, z}
+}
+
+func NewZeroVector() Vector {
+	return Vector{}
+}
+
+func (v Vector) Unpack() [3]float64 {
+	return [3]float64{v.x, v.y, v.z}
 }
 
 func (v Vector) Len() float64 {

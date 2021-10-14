@@ -1,10 +1,4 @@
-package geometry
-
-import "errors"
-
-var (
-	ErrNotImplemented = errors.New("not implemented")
-)
+package topology
 
 type Geometry interface {
 

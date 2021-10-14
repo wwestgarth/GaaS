@@ -1,9 +1,10 @@
-package geometry
+package surface
 
 import (
 	"errors"
 
 	"github.com/google/uuid"
+	"github.com/wwestgarth/remote-geometry/vector"
 )
 
 var (
@@ -11,30 +12,30 @@ var (
 )
 
 type Sphere struct {
-	id     string
-	centre Vector
+	id     uuid.UUID
+	centre vector.Vector
 	radius float64
 }
 
 // NewSphere create a new Geometry that represents a sphere
-func NewSphere(radius float64, centre [3]float64) Geometry {
+func NewSphere(radius float64, centre [3]float64) *Sphere {
 
 	return &Sphere{
-		id:     uuid.New().String(),
+		id:     uuid.New(),
 		radius: radius,
-		centre: NewVector(centre[0], centre[1], centre[2]),
+		centre: vector.NewVector(centre[0], centre[1], centre[2]),
 	}
 }
 
 // ID return the ID of the geometry
-func (s *Sphere) ID() (id string) {
-	return s.id
+func (s *Sphere) ID() string {
+	return s.id.String()
 }
 
 // Validate return whether the geometry is valid
 func (s *Sphere) Validate() (err error) {
 
-	if distZero(s.radius) {
+	if vector.DistZero(s.radius) {
 		return ErrInvalidRadius
 	}
 

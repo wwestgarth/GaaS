@@ -11,7 +11,7 @@
                 "build",
                 "-o",
                 "geometry-server",
-                "${workspaceFolder}/cmd/remote-geometry-server"
+                "${workspaceFolder}/cmd/server"
             ],
             "problemMatcher": [],
             "group": {
@@ -20,22 +20,21 @@
             }
         },
         {
-            "label": "Swagger generation",
+            "label": "Build client",
             "type": "shell",
-            "command": "swagger",
+            "command": "go",
             "args": [
-                "generate",
-                "server",
-                "-f",
-                "${workspaceFolder}/apis/swagger.yml",
-                "-a",
-                "geometry-server"
+                "build",
+                "-o",
+                "geometry-server",
+                "${workspaceFolder}/cmd/client"
             ],
             "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
             }
-        }
+        },
+
     ]
 }
