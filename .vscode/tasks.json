@@ -26,9 +26,10 @@
             "args": [
                 "build",
                 "-o",
-                "geometry-server",
+                "geometry-client",
                 "${workspaceFolder}/cmd/client"
             ],
+            "options": {"env": {"CGO_ENABLED":"1", "CGO_CFLAGS":"-D_GLFW_COCOA"}},
             "problemMatcher": [],
             "group": {
                 "kind": "build",
